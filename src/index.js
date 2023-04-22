@@ -1,9 +1,10 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import moongose from "mongoose";
 
-// TODOD: stopped here
-// fix mongodb connection error
+import { userRouter } from "./routes/users.js";
 
 // STUB: create express server
 const app = express();
@@ -12,9 +13,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// STUB: setup routes
+app.use("/auth", userRouter);
+
 // STUB: connect to database
 moongose.connect(
-	"mongodb+srv://alx:MERNrecipe123@recipes.fdrsfac.mongodb.net/recipes?retryWrites=true&w=majority"
+	`mongodb+srv://alx:${process.env.MONGODB_PASSWORD}@recipes.fdrsfac.mongodb.net/recipes?retryWrites=true&w=majority`
 );
 
 // STUB: setup port
