@@ -1,5 +1,5 @@
 {
-	"name": "MERN-RecipeApp-API",
+	"name": "mern-recipe-app",
 	"version": "1.0.0",
 	"main": "server.js",
 	"type": "module",
