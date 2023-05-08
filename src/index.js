@@ -5,6 +5,7 @@ import cors from "cors";
 import moongose from "mongoose";
 
 import { userRouter } from "./routes/users.js";
+import { recipesRouter } from "./routes/recipes.js";
 
 // STUB: create express server
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors());
 
 // STUB: setup routes
 app.use("/auth", userRouter);
+app.use("/recipes", recipesRouter);
 
 // STUB: connect to database
 moongose.connect(
@@ -25,3 +27,6 @@ moongose.connect(
 app.listen(3001, () => {
 	console.log("SERVER STARTED");
 });
+
+// TODO: stopped here
+// create endpoints for creating & saving recipes
