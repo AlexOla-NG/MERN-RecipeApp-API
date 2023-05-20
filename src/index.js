@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import moongose from "mongoose";
+import morgan from "morgan";
 
 import { userRouter } from "./routes/users.js";
 import { recipesRouter } from "./routes/recipes.js";
@@ -13,6 +14,7 @@ const app = express();
 // STUB: setup middleware
 app.use(express.json());
 app.use(cors());
+app.use(morgan("dev"));
 
 // STUB: setup routes
 app.use("/auth", userRouter);
@@ -27,6 +29,3 @@ moongose.connect(
 app.listen(3001, () => {
 	console.log("SERVER STARTED");
 });
-
-// TODO: stopped here
-// create endpoints for creating & saving recipes

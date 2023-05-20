@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
 });
 
 // STUB: create route for user to save recipe
-// get recipeID & userID from req body, use data to find user & recipe in model
+// get recipeID & lgged in userID from req body, use data to find user & recipe in model
 // push recipe to user.savedRecipes, save user to database
 // return savedRecipes attached to the user
 router.put("/", async (req, res) => {
