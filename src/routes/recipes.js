@@ -31,16 +31,16 @@ router.post("/", async (req, res) => {
 });
 
 // STUB: create route for user to save recipe
-// get recipeID & lgged in userID from req body, use data to find user & recipe in model
+// get recipeID & logged in userID from req body, use data to find user & recipe in model
 // push recipe to user.savedRecipes, save user to database
 // return savedRecipes attached to the user
 router.put("/", async (req, res) => {
 	try {
-		const recipe = await RecipeModel.findById(req.body.recipeID);
+		const recipe = await RecipeModel.findById(req.body.recipeID).lean();
 		const user = await UserModel.findById(req.body.userID);
 
 		// STUB: check if recipe is already saved
-		if (user.savedRecipes.includes(recipe._id)) {
+		if (user.savedRecipes.includes(recipe._id.toString())) {
 			return res.status(400).json({ message: "Recipe already saved" });
 		}
 
