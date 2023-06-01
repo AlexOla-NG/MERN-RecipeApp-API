@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 import { RecipeModel } from "../models/Recipes.js";
 import { UserModel } from "../models/Users.js";
 
-// TODO: add routes to delete saved recipes
+// TODO: stopped here
+// complete function to delete recipe
 
 const router = express.Router();
 
@@ -57,7 +58,10 @@ router.put("/", async (req, res) => {
 router.get("/savedRecipes/ids/:userID", async (req, res) => {
 	try {
 		const user = await UserModel.findById(req.params.userID);
-		res.json({ savedRecipes: user?.savedRecipes });
+		res.json({
+			savedRecipes: user?.savedRecipes,
+			count: user?.savedRecipes.length,
+		});
 	} catch (error) {
 		res.json(error);
 	}
@@ -70,7 +74,28 @@ router.get("/savedRecipes/:userID", async (req, res) => {
 		const savedRecipes = await RecipeModel.find({
 			_id: { $in: user?.savedRecipes }, // this ensures that the recipes, and not the id is returned
 		});
-		res.json(savedRecipes);
+		res.json({ savedRecipes, count: savedRecipes.length });
+	} catch (error) {
+		res.json(error);
+	}
+});
+
+// STUB: delete a recipe that a logged in user has saved
+router.delete("/savedRecipes/:userID/:recipeID", async (req, res) => {
+	try {
+		const updatedUser = await UserModel.findByIdAndUpdate(
+			req.params.userID,
+			{ $pull: { savedRecipes: req.params.recipeID } },
+			{
+				new: true,
+				runValidators: true,
+			}
+		);
+
+		res.json({
+			savedRecipes: updatedUser?.savedRecipes,
+			count: updatedUser?.savedRecipes.length,
+		});
 	} catch (error) {
 		res.json(error);
 	}
