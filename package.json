@@ -1,10 +1,10 @@
 {
 	"name": "mern-recipe-app",
 	"version": "1.0.0",
-	"main": "server.js",
+	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"start": "nodemon src/index.js"
+		"start": "nodemon api/index.js"
 	},
 	"dependencies": {
 		"bcrypt": "^5.1.0",
