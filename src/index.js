@@ -5,7 +5,7 @@ import cors from "cors";
 import moongose from "mongoose";
 import morgan from "morgan";
 
-// import { indexRouter } from "./routes/index.js";
+import { indexRouter } from "./routes/index.js";
 // STUB: create express server
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(morgan("dev"));
 
 // STUB: setup routes
-// app.use("/", indexRouter);
+app.use("/", indexRouter);
 
 // STUB: connect to database
 moongose.connect(

@@ -1,6 +1,6 @@
 var express = require("express");
 
-var { indexRouter } = require("../src/routes/index.js");
+var { indexRouter } = require("../src/routes/index,js");
 
 var app = express();
 
