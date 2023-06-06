@@ -3,9 +3,6 @@ import mongoose from "mongoose";
 import { RecipeModel } from "../models/Recipes.js";
 import { UserModel } from "../models/Users.js";
 
-// TODO: stopped here
-// complete function to delete recipe
-
 const router = express.Router();
 
 // STUB: create route to get all recipes

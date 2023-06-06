@@ -1,31 +1,37 @@
-import * as dotenv from "dotenv";
-dotenv.config();
-import express from "express";
-import cors from "cors";
-import moongose from "mongoose";
-import morgan from "morgan";
+var express = require("express");
 
-import { userRouter } from "./routes/users.js";
-import { recipesRouter } from "./routes/recipes.js";
+var { indexRouter } = require("../src/routes/index.js");
 
-// STUB: create express server
-const app = express();
+var app = express();
 
-// STUB: setup middleware
-app.use(express.json());
-app.use(cors());
-app.use(morgan("dev"));
+const whitelist = ["*"];
 
-// STUB: setup routes
-app.use("/auth", userRouter);
-app.use("/recipes", recipesRouter);
-
-// STUB: connect to database
-moongose.connect(
-	`mongodb+srv://alx:${process.env.MONGODB_PASSWORD}@recipes.fdrsfac.mongodb.net/recipes?retryWrites=true&w=majority`
-);
-
-// STUB: setup port
-app.listen(3001, () => {
-	console.log("SERVER STARTED");
+app.use((req, res, next) => {
+	const origin = req.get("referer");
+	const isWhitelisted = whitelist.find((w) => origin && origin.includes(w));
+	if (isWhitelisted) {
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader(
+			"Access-Control-Allow-Methods",
+			"GET, POST, OPTIONS, PUT, PATCH, DELETE"
+		);
+		res.setHeader(
+			"Access-Control-Allow-Headers",
+			"X-Requested-With,Content-Type,Authorization"
+		);
+		res.setHeader("Access-Control-Allow-Credentials", true);
+	}
+	// Pass to next layer of middleware
+	if (req.method === "OPTIONS") res.sendStatus(200);
+	else next();
 });
+
+const setContext = (req, res, next) => {
+	if (!req.context) req.context = {};
+	next();
+};
+app.use(setContext);
+
+app.use("/", indexRouter);
+
+module.exports = app;
